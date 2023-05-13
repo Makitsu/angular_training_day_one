@@ -1,0 +1,47 @@
+Exercise 4
+
+---
+1 - Create a new Angular project: To create a new Angular project, open a terminal or command prompt and enter the following command:
+
+
+ng new angular-modules-ex4
+
+2 - Create a parent component called ParentComponent and a child component called ChildComponent.
+
+parent.component.html:
+
+<app-child [parentData]="parentData" (childData)="onChildData($event)"></app-child>
+
+
+import { Component, ViewChild } from '@angular/core';
+import { ChildComponent } from './child.component';
+
+@Component({
+  selector: 'app-parent',
+  templateUrl: './parent.component.html',
+})
+export class ParentComponent {
+  parentData = { name: 'Alice', age: 30 };
+
+  @ViewChild(ChildComponent) childComponent: ChildComponent;
+
+  onChildData(childData) {
+    this.parentData = { name: childData.name, age: childData.age };
+  }
+}
+
+...
+
+3 - Define a property called parentData and initialize it to an object with a name and age property (in parent component)
+
+4 - Pass the parentData object to the ChildComponent using an @Input() decorator.
+
+5 - Define a property called childData and initialize it to an empty object. (in the child component)
+
+6 - Add a button to the ChildComponent's template that, when clicked, updates the childData object to have the same name and age values as the parentData object.
+
+7 - Add an @Output() decorator to the ChildComponent that emits the childData object when the button is clicked.
+
+8 - Use @ViewChild() to get a reference to the ChildComponent instance and listen to the childData event using the @Output() decorator.
+
+9 - update the parentData object to have the same name and age values as the childData object (when the childData event is emitted)

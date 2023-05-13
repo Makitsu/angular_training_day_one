@@ -1,0 +1,47 @@
+
+Exercise 1
+
+---
+
+1 - Create a new Angular project: To create a new Angular project, open a terminal or command prompt and enter the following command:
+
+ng new angular-modules-ex1
+
+2 - Create a new module: Once you have created the project, you can create a new module using the Angular CLI.
+Open a terminal or command prompt, navigate to the project directory and enter the following command:
+
+ng generate module first-module-ex1
+
+3 - Add a component to the module: Next, you can add a component to the module. To do this, enter the following command:
+
+ng generate component first-component-ex1 --module=first-module-ex1
+
+4 - Modify the component: Now that you have created the component, you can modify it to display some content.
+Open the "first-component-ex1.component.ts" file in your editor and add the following code:
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-first-component-ex1',
+  template: '<p>Hello World!</p>',
+})
+export class FirstComponentEx1Component {}
+
+5 - Add the module to the app
+Add the module to the app so that it can be used. Open the "app.module.ts" file in your editor and add the following code:
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FirstModuleEx1Module } from './first-component-ex1/first-component-ex1.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, FirstModuleEx1Module],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+
+6 - Use the component: Finally, you can use the component in your app by adding the following code to the "app.component.html" file:
+<app-first-component-ex1></app-first-component-ex1>

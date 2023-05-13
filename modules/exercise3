@@ -1,0 +1,135 @@
+Exercise 3
+
+---
+1 - Create a new Angular project: To create a new Angular project, open a terminal or command prompt and enter the following command:
+
+ng new angular-modules-ex3
+
+2 - Create a component called UserComponent that displays a user's name and age. The component should have two input properties: name (a string) and age (a number).
+
+When the component is initialized (OnInit), it should log a message to the console indicating that it has been initialized.
+
+When the name or age input properties change (OnChanges), the component should update the display to reflect the new values.
+
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: `
+    <h1>User Details</h1>
+    <p>Name: {{ name }}</p>
+    <p>Age: {{ age }}</p>
+  `
+})
+export class UserComponent implements OnInit, OnChanges {
+  @Input() name: string;
+  @Input() age: number;
+
+  ngOnInit() {
+    console.log('UserComponent initialized');
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('UserComponent input changed:', changes);
+  }
+}
+
+Explanations : In this code, we've defined a UserComponent with name and age input properties. We've also implemented the OnInit and OnChanges lifecycle hooks.
+
+               In the OnInit hook, we're simply logging a message to the console indicating that the component has been initialized.
+
+               In the OnChanges hook, we're logging a message to the console indicating that an input property has changed, and we're also logging the changes themselves using the SimpleChanges object.
+
+3 - Create a parent component and pass in values for the name and age input properties:
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-user [name]="userName" [age]="userAge"></app-user>
+    <button (click)="updateUser()">Update User</button>
+  `
+})
+export class ParentComponent {
+  userName = 'Alice';
+  userAge = 30;
+
+  updateUser() {
+    this.userName = 'Bob';
+    this.userAge = 40;
+  }
+}
+
+4 - Question time !
+
+4.1 - What is the purpose of the OnChanges lifecycle hook in Angular?
+4.2 - How do you define input properties in an Angular component?
+4.3 - What is the SimpleChanges object, and how is it used in the OnChanges hook?
+4.4 - How would you update the values of the name and age properties in the UserComponent from a parent component?
+4.5 - What would happen if you changed the changeDetection strategy of the UserComponent to OnPush?
+4.6 - What is the difference between ngOnInit and the constructor of a component?
+4.7 - What other lifecycle hooks are available in Angular, and what are their use cases?
+
+5 - How would you modify the UserComponent to emit an event whenever the user's age changes? Write the code for the event emitter and the event handler in the UserComponent and explain how you would use this event in a parent component.
+
+
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-user',
+  template: `
+    <h1>User Details</h1>
+    <p>Name: {{ name }}</p>
+    <p>Age: {{ age }}</p>
+  `
+})
+export class UserComponent implements OnInit, OnChanges {
+  @Input() name: string;
+  @Input() age: number;
+  @Output() ageChange = new EventEmitter<number>();
+
+  ngOnInit() {
+    console.log('UserComponent initialized');
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('UserComponent input changed:', changes);
+    if ('age' in changes) {
+      this.ageChange.emit(changes.age.currentValue);
+    }
+  }
+}
+
+
+In this code, we've added an Output property called ageChange, which is an instance of EventEmitter.
+We've also modified the ngOnChanges hook to emit the ageChange event whenever the age input property changes.
+
+To use this event in a parent component, we can listen for the ageChange event and handle it in a method.
+Here's an example of how we can do this in a ParentComponent:
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <app-user [name]="userName" [age]="userAge" (ageChange)="onAgeChange($event)"></app-user>
+    <button (click)="updateUser()">Update User</button>
+  `
+})
+export class ParentComponent {
+  userName = 'Alice';
+  userAge = 30;
+
+  updateUser() {
+    this.userName = 'Bob';
+    this.userAge = 40;
+  }
+
+  onAgeChange(newAge: number) {
+    console.log(`User's age has changed to ${newAge}`);
+  }
+}
+
+In this code, we've added an event binding to the UserComponent's ageChange event, and specified a method to handle the event called onAgeChange.
+
+When the UserComponent emits the ageChange event, the onAgeChange method in the ParentComponent is called, logging a message to the console indicating that the user's age has changed.

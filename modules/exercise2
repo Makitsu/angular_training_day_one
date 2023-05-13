@@ -1,0 +1,65 @@
+Exercise 2
+
+---
+1 - Create a new Angular project: To create a new Angular project, open a terminal or command prompt and enter the following command:
+
+ng new my-angular-project
+
+2 - Create a new component: Once you have created the project, you can create a new component using the Angular CLI. Open a terminal or command prompt, navigate to the project directory and enter the following command:
+
+ng generate component my-component
+
+3 - Divide the component into modules: Next, you can divide the "my-component" component into several modules. In this example, we will create two modules: "my-header" and "my-body".
+
+ng generate module my-header
+
+b. Move the header content from "my-component" to "my-header". In the "my-header" module, create a new component named "my-header-component" using the following command:
+
+ng generate component my-header-component
+
+Move the header content from the "my-component" component to the "my-header-component" component.
+
+c. Create a new module named "my-body" using the following command:
+
+ng generate module my-body
+
+d. Move the body content from "my-component" to "my-body". In the "my-body" module, create a new component named "my-body-component" using the following command:
+
+ng generate component my-body-component
+
+Move the body content from the "my-component" component to the "my-body-component" component.
+
+4 - Update the "my-component" module: Now that you have divided the "my-component" component into two modules, you need to update the "my-component" module to import the "my-header" and "my-body" modules.
+
+a. In the "my-component.component.ts" file, remove the header and body content.
+
+b. In the "my-component.component.html" file, add the following code:
+
+<app-my-header-component></app-my-header-component>
+<app-my-body-component></app-my-body-component>
+
+c. In the "my-component.module.ts" file, import the "my-header" and "my-body" modules and declare the "MyHeaderComponent" and "MyBodyComponent" components.
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MyHeaderModule } from '../my-header/my-header.module';
+import { MyBodyModule } from '../my-body/my-body.module';
+import { MyComponentComponent } from './my-component.component';
+
+@NgModule({
+  declarations: [MyComponentComponent],
+  imports: [CommonModule, MyHeaderModule, MyBodyModule],
+  exports: [MyComponentComponent],
+})
+export class MyComponentModule {}
+
+5 - Use the "my-component" module: Finally, you can use the "my-component" module in your app by adding the following code to the "app.component.html" file:
+
+<app-my-component></app-my-component>
+
+
+
+
+
+
+
